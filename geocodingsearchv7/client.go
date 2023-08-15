@@ -34,6 +34,8 @@ type Client struct {
 
 	UserAgent string
 
+	language string
+
 	// Geocoding service
 	Geocoding *GeocodingService
 	// ReverseGeocoding service
@@ -111,6 +113,9 @@ func (c *Client) NewRequest(
 	if c.UserAgent != "" {
 		req.Header.Set("User-Agent", c.UserAgent)
 	}
+	if c.language != "" {
+		req.Header.Set("Accept-Language", c.language)
+	}
 	return req, nil
 }
 
@@ -145,6 +150,10 @@ func (c *Client) Do(req *http.Request, v interface{}) error {
 		}
 	}
 	return err
+}
+
+func (c *Client) SetLanguage(language string) {
+	c.language = language
 }
 
 // checkResponse checks the API response for errors, and returns them if present. A response is considered an
