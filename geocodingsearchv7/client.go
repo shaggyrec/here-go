@@ -99,6 +99,13 @@ func (c *Client) NewRequest(
 	if len(rawQuery) > 0 {
 		u.RawQuery = rawQuery
 	}
+
+	if c.language != "" {
+		values, _ := url.ParseQuery(u.RawQuery)
+		values.Set("lang", c.language)
+		u.RawQuery = values.Encode()
+	}
+
 	if c.language != "" {
 		u.Query().Add("lang", c.language)
 	}
