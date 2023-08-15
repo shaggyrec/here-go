@@ -99,6 +99,9 @@ func (c *Client) NewRequest(
 	if len(rawQuery) > 0 {
 		u.RawQuery = rawQuery
 	}
+	if c.language != "" {
+		u.Query().Add("lang", c.language)
+	}
 	var r io.Reader
 	if len(body) > 0 {
 		r = bytes.NewReader(body)
